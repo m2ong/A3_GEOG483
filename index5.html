@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Geog 483 Leaflet Tutorial</title>
+	<!-- This tutorial is based on the official Leaflet quickstart: http://leafletjs.com/examples/quick-start/ -->
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+
+</head>
+<body>
+
+<style>
+    	body { margin:0; padding:0; }
+    	#mapid { position:absolute; top: 1px; bottom: 1px; left:1px; width:2000px; height:1000px;}
+</style>
+
+<div id="mapid"</div>
+<script src="coffeeshop.geoJson" type="text/javascript"></script>
+<script type='text/javascript'>
+	var mymap = L.map('mapid').setView([43.471, -80.5425], 17);
+
+	L.tileLayer("http://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, '
+	}).addTo(mymap);
+
+	function onEachFeature(feature, layer) {
+    if (feature.properties) {
+        layer.bindPopup("<b>" + feature.properties.name + "</b><br/>Located in building: " + feature.properties.building_n + "<br/>Drinks Available Include: " + feature.properties.drinks_ava + "<br/>- Serves a Small Coffee for $" + feature.properties.coffee_pri + "<br/>- Serves a Medium Coffee for $" + feature.properties.coffee_p_1 + "<br/>- Serves a Large Coffee for $" + feature.properties.coffee_p_2 + "<br/>- Serves Tea for $" + feature.properties.tea_price_ + "<br/>- Serves Hot Chocolate for $" + feature.properties.chocolate_ + "<br/><img ref ='" + feature.properties.photo_of_2 + "' width='300px'/>");
+    }
+	}
+	var coffeeshop = new L.geoJson(coffeeshops, {
+		onEachFeature: onEachFeature
+	}).addTo(mymap);
+	</script>
+ </body>
+</html>
